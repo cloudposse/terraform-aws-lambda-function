@@ -8,19 +8,19 @@
 # the template below the dashes
 
 # Name of this project
-name: terraform-example-module
+name: terraform-aws-lambda-function
 
 # License of this project
 license: "APACHE2"
 
 # Copyrights
 copyrights:
-- name: "Cloud Posse, LLC"
-  url: "https://cloudposse.com"
-  year: "2021"
+  - name: "Cloud Posse, LLC"
+    url: "https://cloudposse.com"
+    year: "2021"
 
 # Canonical GitHub repo
-github_repo: cloudposse/terraform-example-module
+github_repo: cloudposse/terraform-aws-lambda-function
 
 description: |-
   This is an example project to provide all the scaffolding for a typical well-built Cloud Posse
@@ -40,24 +40,29 @@ quickstart: |-
   8. Commit everything to `git` and open your first PR on the new repo.
 
 references:
-- name: "Cloud Posse Documentation"
-  url: "https://docs.cloudposse.com"
-  description: "The Cloud Posse Developer Hub (documentation)"
-- name: "Terraform Standard Module Structure"
-  description: "HashiCorp's standard module structure is a file and directory layout we recommend for reusable modules distributed in separate repositories."
-  url: "https://www.terraform.io/docs/language/modules/develop/structure.html"
-- name: "Terraform Module Requirements"
-  description: "HashiCorp's guidance on all the requirements for publishing a module. Meeting the requirements for publishing a module is extremely easy."
-  url: "https://www.terraform.io/docs/registry/modules/publish.html#requirements"
-- name: "Terraform Version Pinning"
-  description: "The required_version setting can be used to constrain which versions of the Terraform CLI can be used with your configuration"
-  url: "https://www.terraform.io/docs/language/settings/index.html#specifying-a-required-terraform-version"
+  - name: "Cloud Posse Documentation"
+    url: "https://docs.cloudposse.com"
+    description: "The Cloud Posse Developer Hub (documentation)"
+  - name: "Terraform Standard Module Structure"
+    description:
+      "HashiCorp's standard module structure is a file and directory layout we recommend for reusable modules
+      distributed in separate repositories."
+    url: "https://www.terraform.io/docs/language/modules/develop/structure.html"
+  - name: "Terraform Module Requirements"
+    description:
+      "HashiCorp's guidance on all the requirements for publishing a module. Meeting the requirements for publishing a
+      module is extremely easy."
+    url: "https://www.terraform.io/docs/registry/modules/publish.html#requirements"
+  - name: "Terraform Version Pinning"
+    description:
+      "The required_version setting can be used to constrain which versions of the Terraform CLI can be used with your
+      configuration"
+    url: "https://www.terraform.io/docs/language/settings/index.html#specifying-a-required-terraform-version"
 
 related:
-- name: "Example App"
-  url: "https://github.com/cloudposse/example-app"
-  description: "Example application for CI/CD demonstrations of Codefresh"
-
+  - name: "Example App"
+    url: "https://github.com/cloudposse/example-app"
+    description: "Example application for CI/CD demonstrations of Codefresh"
 
 ---
 #         DELETE ME
@@ -67,7 +72,6 @@ related:
 ########################################################################################################################
 ########################################################################################################################
 ########################################################################################################################
-
 
 #
 # This is the canonical configuration for the `README.md`
@@ -95,8 +99,8 @@ github_repo:
 # Badges to display
 badges:
   - name: "Latest Release"
-    image: "https://img.shields.io/github/release/cloudposse/terraform-example-module.svg"
-    url: "https://github.com/cloudposse/terraform-example-module/releases/latest"
+    image: "https://img.shields.io/github/release/cloudposse/terraform-aws-lambda-function.svg"
+    url: "https://github.com/cloudposse/terraform-aws-lambda-function/releases/latest"
   - name: "Slack Community"
     image: "https://slack.cloudposse.com/badge.svg"
     url: "https://slack.cloudposse.com"
@@ -107,7 +111,9 @@ badges:
 # List any related terraform modules that this module may be used with or that this module depends on.
 related:
   - name: "terraform-null-label"
-    description: "Terraform module designed to generate consistent names and tags for resources. Use terraform-null-label to implement a strict naming convention."
+    description:
+      "Terraform module designed to generate consistent names and tags for resources. Use terraform-null-label to
+      implement a strict naming convention."
     url: "https://github.com/cloudposse/terraform-null-label"
 
 # List any resources helpful for someone to get started. For example, link to the hashicorp documentation or AWS documentation.
@@ -154,7 +160,7 @@ usage: |-
 # Example usage
 examples: |-
   Here is an example of using this module:
-  - [`examples/complete`](https://github.com/cloudposse/terraform-example-module/) - complete example of using this module
+  - [`examples/complete`](https://github.com/cloudposse/terraform-aws-lambda-function/) - complete example of using this module
 
 # How to get started quickly
 quickstart: |-
