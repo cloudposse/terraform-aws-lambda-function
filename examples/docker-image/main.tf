@@ -14,6 +14,14 @@ module "ecr" {
   context = module.this.context
 }
 
+# Need to sleep for a few seconds after creating the ECR repository before we can push to it
+resource "time_sleep" "wait_15_seconds" {
+  count      = module.this.enabled ? 1 : 0
+  depends_on = [module.ecr]
+
+  create_duration = "15s"
+}
+
 # Cloud Posse does NOT recommend building and pushing images to ECR via Terraform code. This is a job for your CI/CD
 # pipeline. It is only done here for convenience and so that the example can be run locally.
 data "aws_region" "this" {}
@@ -44,6 +52,7 @@ resource "null_resource" "docker_push" {
   }
 
   depends_on = [
+    time_sleep.wait_15_seconds,
     null_resource.docker_login,
   ]
 }
@@ -57,4 +66,7 @@ module "lambda" {
   package_type  = "Image"
 
   context = module.this.context
+  depends_on = [
+    null_resource.docker_push,
+  ]
 }
