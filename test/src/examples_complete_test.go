@@ -50,3 +50,8 @@ func TestExamplesComplete(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, "{\"data\":\"Hello World\"}", string(result.Payload))
 }
+
+// Test the Terraform module in examples/complete doesn't attempt to create resources with enabled=false.
+func TestExamplesCompleteDisabled(t *testing.T) {
+	testNoChanges(t, "../../examples/complete")
+}
