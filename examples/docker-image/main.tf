@@ -24,8 +24,8 @@ resource "time_sleep" "wait_15_seconds" {
 
 # Cloud Posse does NOT recommend building and pushing images to ECR via Terraform code. This is a job for your CI/CD
 # pipeline. It is only done here for convenience and so that the example can be run locally.
-data "aws_region" "this" {}
-data "aws_caller_identity" "this" {}
+data "aws_region" "this" {count = module.this.enabled ? 1 : 0}
+data "aws_caller_identity" "this" {count = module.this.enabled ? 1 : 0}
 
 resource "null_resource" "docker_build" {
   count = module.this.enabled ? 1 : 0
@@ -37,7 +37,7 @@ resource "null_resource" "docker_build" {
 resource "null_resource" "docker_login" {
   count = module.this.enabled ? 1 : 0
   provisioner "local-exec" {
-    command = "aws ecr get-login-password --region ${data.aws_region.this.name} | docker login --username AWS --password-stdin ${data.aws_caller_identity.this.account_id}.dkr.ecr.${data.aws_region.this.name}.amazonaws.com"
+    command = "aws ecr get-login-password --region ${data.aws_region.this[0].name} | docker login --username AWS --password-stdin ${data.aws_caller_identity.this[0].account_id}.dkr.ecr.${data.aws_region.this[0].name}.amazonaws.com"
   }
 
   depends_on = [
