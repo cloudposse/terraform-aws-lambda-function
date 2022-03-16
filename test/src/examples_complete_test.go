@@ -1,6 +1,7 @@
 package test
 
 import (
+	"encoding/json"
 	"strings"
 	"testing"
 
@@ -46,9 +47,13 @@ func TestExamplesComplete(t *testing.T) {
 	client := lambda.New(sess, &aws.Config{Region: aws.String("us-east-2")})
 
 	result, err := client.Invoke(&lambda.InvokeInput{FunctionName: aws.String(arn)})
-
 	assert.Nil(t, err)
-	assert.Equal(t, "{\"data\":\"Hello World\"}", string(result.Payload))
+
+	var output map[string]interface{}
+	err = json.Unmarshal([]byte(result.Payload), &output)
+	assert.Nil(t, err)
+
+	assert.Equal(t, "Hello World", output["data"])
 }
 
 // Test the Terraform module in examples/complete doesn't attempt to create resources with enabled=false.
