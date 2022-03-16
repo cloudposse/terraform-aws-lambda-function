@@ -5,8 +5,8 @@ module "cloudwatch_log_group" {
   iam_role_enabled  = false
   kms_key_arn       = var.cloudwatch_logs_kms_key_arn
   retention_in_days = var.cloudwatch_logs_retention_in_days
-
-  context = module.this.context
+  attributes        = ["lambda", var.function_name]
+  context           = module.this.context
 }
 
 resource "aws_lambda_function" "this" {
@@ -71,8 +71,9 @@ data "aws_region" "this" {}
 data "aws_caller_identity" "this" {}
 
 locals {
-  enabled     = module.this.enabled
-  account_id  = data.aws_caller_identity.this.account_id
-  partition   = data.aws_partition.this.partition
-  region_name = data.aws_region.this.name
+  enabled       = module.this.enabled
+  enabled_count = local.enabled ? 1 : 0
+  account_id    = data.aws_caller_identity.this.account_id
+  partition     = data.aws_partition.this.partition
+  region_name   = data.aws_region.this.name
 }

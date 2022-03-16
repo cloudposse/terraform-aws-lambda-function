@@ -1,3 +1,3 @@
 exports.handler = async function (_event, _context) {
-  return { data: "Hello World" };
+  return JSON.stringify({ data: "Hello World" });
 };
