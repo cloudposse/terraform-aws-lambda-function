@@ -66,14 +66,13 @@ resource "aws_lambda_function" "this" {
   }
 }
 
-data "aws_partition" "this" {}
-data "aws_region" "this" {}
-data "aws_caller_identity" "this" {}
+data "aws_partition" "this" { count = local.enabled ? 1 : 0 }
+data "aws_region" "this" { count = local.enabled ? 1 : 0 }
+data "aws_caller_identity" "this" { count = local.enabled ? 1 : 0 }
 
 locals {
-  enabled       = module.this.enabled
-  enabled_count = local.enabled ? 1 : 0
-  account_id    = data.aws_caller_identity.this.account_id
-  partition     = data.aws_partition.this.partition
-  region_name   = data.aws_region.this.name
+  enabled     = module.this.enabled
+  account_id  = local.enabled ? data.aws_caller_identity.this[0].account_id : null
+  partition   = local.enabled ? data.aws_partition.this[0].partition : null
+  region_name = local.enabled ? data.aws_region.this[0].name : null
 }
