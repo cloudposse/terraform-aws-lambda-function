@@ -100,11 +100,6 @@ For a complete example, see [examples/complete](examples/complete).
 For automated tests of the complete example using [bats](https://github.com/bats-core/bats-core) and [Terratest](https://github.com/gruntwork-io/terratest)
 (which tests and deploys the example on AWS), see [test](test).
 ```hcl
-module "ssm_patch_manager" {
-  source  = "cloudposse/ssm-patch-manager/aws"
-  version = "xxxx"
-  name = "test"
-}
 module "lambda" {
   source  = "cloudposse/lambda-function/aws"
   version = "xxxx"
