@@ -13,14 +13,14 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// Test the Terraform module in examples/complete using Terratest.
-func TestExamplesComplete(t *testing.T) {
+// Test the Terraform module in examples/docker-image using Terratest.
+func TestExamplesDockerImage(t *testing.T) {
 	randID := strings.ToLower(random.UniqueId())
 	attributes := []string{randID}
 
 	terraformOptions := &terraform.Options{
 		// The path to where our Terraform code is located
-		TerraformDir: "../../examples/complete",
+		TerraformDir: "../../examples/docker-image",
 		Upgrade:      true,
 		// Variables to pass to our Terraform code using -var-file options
 		VarFiles: []string{"fixtures.us-east-2.tfvars"},
@@ -56,7 +56,7 @@ func TestExamplesComplete(t *testing.T) {
 	assert.Equal(t, "Hello World", output["data"])
 }
 
-// Test the Terraform module in examples/complete doesn't attempt to create resources with enabled=false.
-func TestExamplesCompleteDisabled(t *testing.T) {
-	testNoChanges(t, "../../examples/complete")
+// Test the Terraform module in examples/docker-image doesn't attempt to create resources with enabled=false.
+func TestExamplesDockerImageDisabled(t *testing.T) {
+	testNoChanges(t, "../../examples/docker-image")
 }
