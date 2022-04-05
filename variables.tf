@@ -145,6 +145,12 @@ variable "package_type" {
   type        = string
 }
 
+variable "permissions_boundary" {
+  type        = string
+  default     = ""
+  description = "ARN of the policy that is used to set the permissions boundary for the role"
+}
+
 variable "publish" {
   description = "Whether to publish creation/change as new Lambda Function Version."
   default     = false
