@@ -98,6 +98,7 @@
 | Name | Description |
 |------|-------------|
 | <a name="output_arn"></a> [arn](#output\_arn) | ARN of the lambda function |
+| <a name="output_function_name"></a> [function\_name](#output\_function\_name) | Lambda function name |
 | <a name="output_invoke_arn"></a> [invoke\_arn](#output\_invoke\_arn) | Inkoke ARN of the lambda function |
 | <a name="output_qualified_arn"></a> [qualified\_arn](#output\_qualified\_arn) | ARN identifying your Lambda Function Version (if versioning is enabled via publish = true) |
 <!-- markdownlint-restore -->
