@@ -15,5 +15,5 @@ output "qualified_arn" {
 
 output "function_name" {
   description = "Lambda function name"
-  value = local.enabled ? aws_lambda_function.this[0].function_name : null
+  value       = local.enabled ? aws_lambda_function.this[0].function_name : null
 }

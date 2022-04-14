@@ -239,3 +239,9 @@ variable "vpc_config" {
     subnet_ids         = list(string)
   })
 }
+
+variable "custom_iam_policy_arn" {
+  type        = string
+  default     = null
+  description = "ARN of custom policy to be attached to the lambda role"
+}
