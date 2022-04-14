@@ -240,9 +240,8 @@ variable "vpc_config" {
   })
 }
 
-variable "custom_iam_policy_arn" {
+variable "custom_iam_policy_arns" {
   type        = set(string)
   description = "List of custom policy to be attached to the lambda role"
   default     = []
-
 }
