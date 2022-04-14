@@ -74,7 +74,7 @@ resource "aws_iam_role_policy_attachment" "ssm" {
 }
 
 resource "aws_iam_role_policy_attachment" "custom" {
-  for_each   = local.enabled && var.custom_iam_policy_arn != [] ? var.custom_iam_policy_arn : []
+  for_each   = local.enabled && length(var.custom_iam_policy_arns) > 0 ? var.custom_iam_policy_arns : toset([])
   role       = aws_iam_role.this[0].name
   policy_arn = each.key
 }
