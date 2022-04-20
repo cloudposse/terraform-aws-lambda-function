@@ -240,6 +240,12 @@ variable "vpc_config" {
   })
 }
 
+
+variable "custom_iam_policy_enabled" {
+  type        = string
+  description = "To enable custom policies on the iam role"
+  default     = false
+}
 variable "custom_iam_policy_arn" {
   type        = string
   description = "ARN of custom policy to be attached to the lambda role"
