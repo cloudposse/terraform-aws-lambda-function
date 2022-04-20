@@ -74,7 +74,7 @@ resource "aws_iam_role_policy_attachment" "ssm" {
 }
 
 resource "aws_iam_role_policy_attachment" "custom" {
-  for_each   = try((local.enabled && length(var.custom_iam_policy_arns) > 0), false) ? var.custom_iam_policy_arns : toset([])
+  count   = try((local.enabled && length(var.custom_iam_policy_arns) > 0), false) ? length(var.custom_iam_policy_arns) : 0
   role       = aws_iam_role.this[0].name
-  policy_arn = each.key
+  policy_arn = var.custom_iam_policy_arns[count.index]
 }
