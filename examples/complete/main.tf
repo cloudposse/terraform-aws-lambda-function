@@ -7,8 +7,8 @@ locals {
 
   policy_arn_prefix = format(
     "arn:%s:iam::%s:policy",
-    data.aws_partition.current.partition,
-    data.aws_caller_identity.current.account_id,
+    join("", data.aws_partition.current.*.partition),
+    join("", data.aws_caller_identity.current.*.account_id),
   )
   policy_arn_inside = format("%s/%s", local.policy_arn_prefix, local.policy_name_inside)
 }
@@ -21,8 +21,13 @@ module "label" {
   context = module.this.context
 }
 
-data "aws_partition" "current" {}
-data "aws_caller_identity" "current" {}
+data "aws_partition" "current" {
+  count = local.enabled ? 1 : 0
+}
+
+data "aws_caller_identity" "current" {
+  count = local.enabled ? 1 : 0
+}
 
 data "archive_file" "lambda_zip" {
   count       = local.enabled ? 1 : 0
@@ -32,9 +37,8 @@ data "archive_file" "lambda_zip" {
 }
 
 module "iam_policy" {
-  source = "cloudposse/iam-policy/aws"
-  # Cloud Posse recommends pinning every module to a specific version
-  # version = "x.x.x"
+  source  = "cloudposse/iam-policy/aws"
+  version = "0.3.0"
 
   iam_policy_statements = {
     ListMyBucket = {
@@ -81,7 +85,7 @@ resource "aws_iam_role_policy_attachment" "outside" {
 module "lambda" {
   source = "../.."
 
-  filename      = data.archive_file.lambda_zip[0].output_path
+  filename      = join("", data.archive_file.lambda_zip.*.output_path)
   function_name = module.label.id
   handler       = var.handler
   runtime       = var.runtime
