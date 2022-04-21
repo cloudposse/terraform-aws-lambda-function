@@ -1,4 +1,6 @@
 locals {
+  enabled = module.this.enabled
+
   policy_name = "${module.this.id}-test-policy-addition"
 }
 
@@ -37,12 +39,28 @@ module "iam_policy" {
   }
 }
 
-resource "aws_iam_policy" "default" {
+resource "aws_iam_policy" "inside" {
+  count       = local.enabled ? 1 : 0
   name        = local.policy_name
   path        = "/"
-  description = "My test policy"
+  description = "My policy attached inside the lambda module"
 
   policy = module.iam_policy.json
+}
+
+resource "aws_iam_policy" "outside" {
+  count       = local.enabled ? 1 : 0
+  name        = local.policy_name
+  path        = "/"
+  description = "My policy attached outside the lambda module"
+
+  policy = module.iam_policy.json
+}
+
+resource "aws_iam_role_policy_attachment" "outside" {
+  count      = local.enabled ? 1 : 0
+  role       = module.lambda.role_name
+  policy_arn = aws_iam_policy.outside.arn
 }
 
 module "lambda" {
@@ -55,12 +73,12 @@ module "lambda" {
 
   custom_iam_policy_arns = [
     "arn:aws:iam::aws:policy/job-function/ViewOnlyAccess",
-    local.policy_name, # aws_iam_policy.default.id,
+    local.policy_name, # aws_iam_policy.inside[0].id,
   ]
 
   context = module.this.context
 
   depends_on = [
-    aws_iam_policy.default,
+    aws_iam_policy.inside,
   ]
 }
