@@ -14,6 +14,7 @@ module "label" {
 }
 
 data "archive_file" "lambda_zip" {
+  count       = local.enabled ? 1 : 0
   type        = "zip"
   source_file = "handler.js"
   output_path = "lambda_function.zip"
@@ -38,6 +39,8 @@ module "iam_policy" {
       conditions = []
     },
   }
+  
+  context = module.this.context
 }
 
 resource "aws_iam_policy" "inside" {
@@ -67,7 +70,7 @@ resource "aws_iam_role_policy_attachment" "outside" {
 module "lambda" {
   source = "../.."
 
-  filename      = data.archive_file.lambda_zip.output_path
+  filename      = data.archive_file.lambda_zip[0].output_path
   function_name = module.label.id
   handler       = var.handler
   runtime       = var.runtime
