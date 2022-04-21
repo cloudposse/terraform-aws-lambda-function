@@ -2,7 +2,8 @@ locals {
   enabled = module.this.enabled
 
   # The policy name has to be at least 20 characters
-  policy_name = "${module.this.id}-test-policy-addition"
+  policy_name_inside = "${module.this.id}-test-policy-inside"
+  policy_name_outside = "${module.this.id}-test-policy-outside"
 }
 
 module "label" {
@@ -45,7 +46,7 @@ module "iam_policy" {
 
 resource "aws_iam_policy" "inside" {
   count       = local.enabled ? 1 : 0
-  name        = local.policy_name
+  name        = local.policy_name_inside
   path        = "/"
   description = "My policy attached inside the lambda module"
 
@@ -54,7 +55,7 @@ resource "aws_iam_policy" "inside" {
 
 resource "aws_iam_policy" "outside" {
   count       = local.enabled ? 1 : 0
-  name        = local.policy_name
+  name        = local.policy_name_outside
   path        = "/"
   description = "My policy attached outside the lambda module"
 
@@ -77,7 +78,8 @@ module "lambda" {
 
   custom_iam_policy_arns = [
     "arn:aws:iam::aws:policy/job-function/ViewOnlyAccess",
-    local.policy_name, # aws_iam_policy.inside[0].id,
+    local.policy_name_inside,
+    # aws_iam_policy.inside[0].id, # This will result in an error message and is why we use local.policy_name_inside
   ]
 
   context = module.this.context
