@@ -1,5 +1,5 @@
 locals {
-  policy_name = module.this.id
+  policy_name = "${module.this.id}-test-policy-addition"
 }
 
 module "label" {
