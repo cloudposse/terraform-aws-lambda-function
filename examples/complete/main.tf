@@ -2,8 +2,15 @@ locals {
   enabled = module.this.enabled
 
   # The policy name has to be at least 20 characters
-  policy_name_inside  = "${module.this.id}-test-policy-inside"
-  policy_name_outside = "${module.this.id}-test-policy-outside"
+  policy_name_inside  = "${module.label.id}-inside"
+  policy_name_outside = "${module.label.id}-outside"
+  
+  policy_arn_prefix = format(
+    "arn:%s:iam::%s:policy",
+    data.aws_partition.current.partition,
+    data.aws_caller_identity.current.account_id,
+  )
+  policy_arn_inside = format("%s/%s", local.policy_arn_prefix, local.policy_name_inside)
 }
 
 module "label" {
@@ -13,6 +20,9 @@ module "label" {
 
   context = module.this.context
 }
+
+data "aws_partition" "current" {}
+data "aws_caller_identity" "current" {}
 
 data "archive_file" "lambda_zip" {
   count       = local.enabled ? 1 : 0
@@ -78,7 +88,7 @@ module "lambda" {
 
   custom_iam_policy_arns = [
     "arn:aws:iam::aws:policy/job-function/ViewOnlyAccess",
-    local.policy_name_inside,
+    local.policy_arn_inside,
     # aws_iam_policy.inside[0].id, # This will result in an error message and is why we use local.policy_name_inside
   ]
 
