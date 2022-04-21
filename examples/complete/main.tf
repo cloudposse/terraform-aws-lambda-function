@@ -1,6 +1,7 @@
 locals {
   enabled = module.this.enabled
 
+  # The policy name has to be at least 20 characters
   policy_name = "${module.this.id}-test-policy-addition"
 }
 
@@ -60,7 +61,7 @@ resource "aws_iam_policy" "outside" {
 resource "aws_iam_role_policy_attachment" "outside" {
   count      = local.enabled ? 1 : 0
   role       = module.lambda.role_name
-  policy_arn = aws_iam_policy.outside.arn
+  policy_arn = aws_iam_policy.outside[0].arn
 }
 
 module "lambda" {
