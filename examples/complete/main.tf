@@ -17,7 +17,7 @@ data "archive_file" "lambda_zip" {
 }
 
 module "iam_policy" {
-  source  = "cloudposse/iam-policy/aws"
+  source = "cloudposse/iam-policy/aws"
   # Cloud Posse recommends pinning every module to a specific version
   # version = "x.x.x"
 
