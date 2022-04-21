@@ -2,7 +2,7 @@ locals {
   enabled = module.this.enabled
 
   # The policy name has to be at least 20 characters
-  policy_name_inside = "${module.this.id}-test-policy-inside"
+  policy_name_inside  = "${module.this.id}-test-policy-inside"
   policy_name_outside = "${module.this.id}-test-policy-outside"
 }
 
