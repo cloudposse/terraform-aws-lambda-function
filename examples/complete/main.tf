@@ -4,7 +4,7 @@ locals {
   # The policy name has to be at least 20 characters
   policy_name_inside  = "${module.label.id}-inside"
   policy_name_outside = "${module.label.id}-outside"
-  
+
   policy_arn_prefix = format(
     "arn:%s:iam::%s:policy",
     data.aws_partition.current.partition,
