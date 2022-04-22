@@ -1,11 +1,13 @@
 resource "aws_iam_role" "this" {
   count                = local.enabled ? 1 : 0
   name                 = "${var.function_name}-${local.region_name}"
-  assume_role_policy   = data.aws_iam_policy_document.assume_role_policy.json
+  assume_role_policy   = join("", data.aws_iam_policy_document.assume_role_policy.*.json)
   permissions_boundary = var.permissions_boundary
 }
 
 data "aws_iam_policy_document" "assume_role_policy" {
+  count = local.enabled ? 1 : 0
+
   statement {
     actions = ["sts:AssumeRole"]
 
