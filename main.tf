@@ -1,6 +1,6 @@
 module "cloudwatch_log_group" {
   source  = "cloudposse/cloudwatch-logs/aws"
-  version = "0.6.4"
+  version = "0.6.5"
 
   iam_role_enabled  = false
   kms_key_arn       = var.cloudwatch_logs_kms_key_arn
