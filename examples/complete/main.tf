@@ -11,6 +11,19 @@ locals {
     join("", data.aws_caller_identity.current.*.account_id),
   )
   policy_arn_inside = format("%s/%s", local.policy_arn_prefix, local.policy_name_inside)
+
+  policy_json = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "ec2:Describe*",
+        ]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
 }
 
 module "label" {
@@ -36,35 +49,13 @@ data "archive_file" "lambda_zip" {
   output_path = "lambda_function.zip"
 }
 
-module "iam_policy" {
-  source  = "cloudposse/iam-policy/aws"
-  version = "0.3.0"
-
-  iam_policy_statements = {
-    ListMyBucket = {
-      effect     = "Allow"
-      actions    = ["s3:ListBucket"]
-      resources  = ["arn:aws:s3:::test"]
-      conditions = []
-    }
-    WriteMyBucket = {
-      effect     = "Allow"
-      actions    = ["s3:PutObject", "s3:GetObject", "s3:DeleteObject"]
-      resources  = ["arn:aws:s3:::test/*"]
-      conditions = []
-    },
-  }
-
-  context = module.this.context
-}
-
 resource "aws_iam_policy" "inside" {
   count       = local.enabled ? 1 : 0
   name        = local.policy_name_inside
   path        = "/"
   description = "My policy attached inside the lambda module"
 
-  policy = module.iam_policy.json
+  policy = local.policy_json
 }
 
 resource "aws_iam_policy" "outside" {
@@ -73,7 +64,7 @@ resource "aws_iam_policy" "outside" {
   path        = "/"
   description = "My policy attached outside the lambda module"
 
-  policy = module.iam_policy.json
+  policy = local.policy_json
 }
 
 resource "aws_iam_role_policy_attachment" "outside" {
