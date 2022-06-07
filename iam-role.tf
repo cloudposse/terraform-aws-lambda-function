@@ -32,14 +32,14 @@ resource "aws_iam_role_policy_attachment" "cloudwatch_insights" {
 }
 
 resource "aws_iam_role_policy_attachment" "vpc_access" {
-  count = local.enabled && var.vpc_config != null ? 1 : 0
+  count = local.enabled && try(length(var.vpc_config), 0) > 0 ? 1 : 0
 
   policy_arn = "arn:${local.partition}:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
   role       = aws_iam_role.this[0].name
 }
 
 resource "aws_iam_role_policy_attachment" "xray" {
-  count = local.enabled && var.tracing_config_mode != null ? 1 : 0
+  count = local.enabled && try(length(var.tracing_config_mode), 0) > 0 ? 1 : 0
 
   policy_arn = "arn:${local.partition}:iam::aws:policy/AWSXRayDaemonWriteAccess"
   role       = aws_iam_role.this[0].name
