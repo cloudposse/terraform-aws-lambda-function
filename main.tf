@@ -34,6 +34,14 @@ resource "aws_lambda_function" "this" {
   tags                           = var.tags
   timeout                        = var.timeout
 
+  dynamic "dead_letter_config" {
+    for_each = try(length(var.dead_letter_config_target_arn), 0) > 0 ? [true] : []
+
+    content {
+      target_arn = var.dead_letter_config_target_arn
+    }
+  }
+
   dynamic "environment" {
     for_each = var.lambda_environment != null ? [var.lambda_environment] : []
     content {
