@@ -401,12 +401,14 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
 ### Contributors
 
 <!-- markdownlint-disable -->
-|  [![Matt Calhoun][mcalhoun_avatar]][mcalhoun_homepage]<br/>[Matt Calhoun][mcalhoun_homepage] |
-|---|
+|  [![Matt Calhoun][mcalhoun_avatar]][mcalhoun_homepage]<br/>[Matt Calhoun][mcalhoun_homepage] | [![PePe Amengual][jamengual_avatar]][jamengual_homepage]<br/>[PePe Amengual][jamengual_homepage] |
+|---|---|
 <!-- markdownlint-restore -->
 
   [mcalhoun_homepage]: https://github.com/mcalhoun
   [mcalhoun_avatar]: https://img.cloudposse.com/150x150/https://github.com/mcalhoun.png
+  [jamengual_homepage]: https://github.com/jamengual
+  [jamengual_avatar]: https://img.cloudposse.com/150x150/https://github.com/jamengual.png
 
 [![README Footer][readme_footer_img]][readme_footer_link]
 [![Beacon][beacon]][website]
