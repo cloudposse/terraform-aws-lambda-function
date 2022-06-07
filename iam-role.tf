@@ -13,7 +13,7 @@ data "aws_iam_policy_document" "assume_role_policy" {
 
     principals {
       type        = "Service"
-      identifiers = var.lambda_at_edge ? ["edgelambda.amazonaws.com"] : ["lambda.amazonaws.com"]
+      identifiers = concat(["lambda.amazonaws.com"], var.lambda_at_edge ? ["edgelambda.amazonaws.com"] : [])
     }
   }
 }
