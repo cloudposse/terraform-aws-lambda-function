@@ -36,7 +36,7 @@ resource "aws_lambda_function" "this" {
 
   dynamic "dead_letter_config" {
     for_each = try(length(var.dead_letter_config_target_arn), 0) > 0 ? [true] : []
-  
+
     content {
       target_arn = var.dead_letter_config_target_arn
     }
