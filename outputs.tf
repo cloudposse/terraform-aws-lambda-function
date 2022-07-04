@@ -13,6 +13,11 @@ output "qualified_arn" {
   value       = local.enabled ? aws_lambda_function.this[0].qualified_arn : null
 }
 
+output "version" {
+  description = "Latest published version of your Lambda Function (if versioning is enabled via publish = true)"
+  value       = local.enabled ? aws_lambda_function.this[0].version : null
+}
+
 output "function_name" {
   description = "Lambda function name"
   value       = local.enabled ? aws_lambda_function.this[0].function_name : null
