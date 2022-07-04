@@ -106,4 +106,5 @@
 | <a name="output_qualified_arn"></a> [qualified\_arn](#output\_qualified\_arn) | ARN identifying your Lambda Function Version (if versioning is enabled via publish = true) |
 | <a name="output_role_arn"></a> [role\_arn](#output\_role\_arn) | Lambda IAM role ARN |
 | <a name="output_role_name"></a> [role\_name](#output\_role\_name) | Lambda IAM role name |
+| <a name="output_version"></a> [version](#output\_version) | Latest published version of your Lambda Function (if versioning is enabled via publish = true) |
 <!-- markdownlint-restore -->
