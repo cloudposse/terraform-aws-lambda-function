@@ -1,3 +1,11 @@
+data "aws_region" "this" {
+  count = module.this.enabled ? 1 : 0
+}
+
+data "aws_caller_identity" "this" {
+  count = module.this.enabled ? 1 : 0
+}
+
 module "label" {
   source     = "cloudposse/label/null"
   version    = "0.25.0"
@@ -24,14 +32,6 @@ resource "time_sleep" "wait_15_seconds" {
   create_duration = "15s"
 }
 
-data "aws_region" "this" {
-  count = module.this.enabled ? 1 : 0
-}
-
-data "aws_caller_identity" "this" {
-  count = module.this.enabled ? 1 : 0
-}
-
 resource "null_resource" "docker_build" {
   count = module.this.enabled ? 1 : 0
 
@@ -43,11 +43,11 @@ resource "null_resource" "docker_build" {
 resource "null_resource" "docker_login" {
   count = module.this.enabled ? 1 : 0
   provisioner "local-exec" {
-    command = "aws ecr get-login-password --region ${data.aws_region.this[0].name} | docker login --username AWS --password-stdin ${data.aws_caller_identity.this[0].account_id}.dkr.ecr.${data.aws_region.this[0].name}.amazonaws.com"
+    command = "aws ecr get-login-password --region ${join("", data.aws_region.this.*.name)} | docker login --username AWS --password-stdin ${join("", data.aws_caller_identity.this.*.account_id)}.dkr.ecr.${join("", data.aws_region.this.*.name)}.amazonaws.com"
   }
 
   depends_on = [
-    null_resource.docker_build,
+    null_resource.docker_build
   ]
 }
 
@@ -59,7 +59,7 @@ resource "null_resource" "docker_push" {
 
   depends_on = [
     time_sleep.wait_15_seconds,
-    null_resource.docker_login,
+    null_resource.docker_login
   ]
 }
 
@@ -73,6 +73,6 @@ module "lambda" {
   context = module.this.context
 
   depends_on = [
-    null_resource.docker_push,
+    null_resource.docker_push
   ]
 }
