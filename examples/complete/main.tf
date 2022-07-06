@@ -77,10 +77,11 @@ resource "aws_iam_role_policy_attachment" "outside" {
 module "lambda" {
   source = "../.."
 
-  filename      = join("", data.archive_file.lambda_zip.*.output_path)
-  function_name = module.label.id
-  handler       = var.handler
-  runtime       = var.runtime
+  filename               = join("", data.archive_file.lambda_zip.*.output_path)
+  function_name          = module.label.id
+  handler                = var.handler
+  runtime                = var.runtime
+  iam_policy_description = var.iam_policy_description
 
   custom_iam_policy_arns = [
     "arn:aws:iam::aws:policy/job-function/ViewOnlyAccess",

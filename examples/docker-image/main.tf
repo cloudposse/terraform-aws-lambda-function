@@ -66,9 +66,10 @@ resource "null_resource" "docker_push" {
 module "lambda" {
   source = "../.."
 
-  function_name = module.label.id
-  image_uri     = "${module.ecr.repository_url}:latest"
-  package_type  = "Image"
+  function_name          = module.label.id
+  image_uri              = "${module.ecr.repository_url}:latest"
+  package_type           = "Image"
+  iam_policy_description = var.iam_policy_description
 
   context = module.this.context
 

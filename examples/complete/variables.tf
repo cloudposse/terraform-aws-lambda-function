@@ -19,3 +19,9 @@ variable "runtime" {
   description = "The runtime environment for the Lambda function you are uploading."
   default     = ""
 }
+
+variable "iam_policy_description" {
+  type        = string
+  description = "Description of the IAM policy for the Lambda IAM role"
+  default     = "Minimum SSM read permissions for Lambda"
+}

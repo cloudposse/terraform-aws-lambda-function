@@ -254,3 +254,9 @@ variable "dead_letter_config_target_arn" {
   EOF
   default     = null
 }
+
+variable "iam_policy_description" {
+  type        = string
+  description = "Description of the IAM policy for the Lambda IAM role"
+  default     = "Provides minimum SSM read permissions."
+}
