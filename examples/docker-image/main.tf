@@ -26,10 +26,11 @@ module "ecr" {
 
 # Need to sleep for a few seconds after creating the ECR repository before we can push to it
 resource "time_sleep" "wait_15_seconds" {
-  count      = module.this.enabled ? 1 : 0
-  depends_on = [module.ecr]
+  count = module.this.enabled ? 1 : 0
 
   create_duration = "15s"
+
+  depends_on = [module.ecr]
 }
 
 resource "null_resource" "docker_build" {
@@ -42,17 +43,17 @@ resource "null_resource" "docker_build" {
 
 resource "null_resource" "docker_login" {
   count = module.this.enabled ? 1 : 0
+
   provisioner "local-exec" {
     command = "aws ecr get-login-password --region ${join("", data.aws_region.this.*.name)} | docker login --username AWS --password-stdin ${join("", data.aws_caller_identity.this.*.account_id)}.dkr.ecr.${join("", data.aws_region.this.*.name)}.amazonaws.com"
   }
 
-  depends_on = [
-    null_resource.docker_build
-  ]
+  depends_on = [null_resource.docker_build]
 }
 
 resource "null_resource" "docker_push" {
   count = module.this.enabled ? 1 : 0
+
   provisioner "local-exec" {
     command = "docker push ${module.ecr.repository_url}:latest"
   }
@@ -73,7 +74,5 @@ module "lambda" {
 
   context = module.this.context
 
-  depends_on = [
-    null_resource.docker_push
-  ]
+  depends_on = [null_resource.docker_push]
 }

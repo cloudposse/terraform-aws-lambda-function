@@ -19,8 +19,6 @@ module "cloudwatch_log_group" {
 resource "aws_lambda_function" "this" {
   count = module.this.enabled ? 1 : 0
 
-  depends_on = [module.cloudwatch_log_group]
-
   architectures                  = var.architectures
   description                    = var.description
   filename                       = var.filename
@@ -80,6 +78,8 @@ resource "aws_lambda_function" "this" {
       subnet_ids         = vpc_config.value.subnet_ids
     }
   }
+
+  depends_on = [module.cloudwatch_log_group]
 
   lifecycle {
     ignore_changes = [last_modified]

@@ -91,7 +91,5 @@ module "lambda" {
 
   context = module.this.context
 
-  depends_on = [
-    aws_iam_policy.inside,
-  ]
+  depends_on = [aws_iam_policy.inside]
 }
