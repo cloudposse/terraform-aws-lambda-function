@@ -72,6 +72,10 @@ resource "aws_lambda_function" "this" {
       subnet_ids         = vpc_config.value.subnet_ids
     }
   }
+
+  lifecycle {
+    ignore_changes = [last_modified]
+  }
 }
 
 data "aws_partition" "this" { count = local.enabled ? 1 : 0 }
