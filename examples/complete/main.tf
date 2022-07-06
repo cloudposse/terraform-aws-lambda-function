@@ -10,6 +10,7 @@ locals {
     join("", data.aws_partition.current.*.partition),
     join("", data.aws_caller_identity.current.*.account_id),
   )
+
   policy_arn_inside = format("%s/%s", local.policy_arn_prefix, local.policy_name_inside)
 
   policy_json = jsonencode({
@@ -53,7 +54,7 @@ resource "aws_iam_policy" "inside" {
   count       = local.enabled ? 1 : 0
   name        = local.policy_name_inside
   path        = "/"
-  description = "My policy attached inside the lambda module"
+  description = "The policy attached inside the Lambda module"
 
   policy = local.policy_json
 }
@@ -62,7 +63,7 @@ resource "aws_iam_policy" "outside" {
   count       = local.enabled ? 1 : 0
   name        = local.policy_name_outside
   path        = "/"
-  description = "My policy attached outside the lambda module"
+  description = "The policy attached outside the Lambda module"
 
   policy = local.policy_json
 }
@@ -76,10 +77,11 @@ resource "aws_iam_role_policy_attachment" "outside" {
 module "lambda" {
   source = "../.."
 
-  filename      = join("", data.archive_file.lambda_zip.*.output_path)
-  function_name = module.label.id
-  handler       = var.handler
-  runtime       = var.runtime
+  filename               = join("", data.archive_file.lambda_zip.*.output_path)
+  function_name          = module.label.id
+  handler                = var.handler
+  runtime                = var.runtime
+  iam_policy_description = var.iam_policy_description
 
   custom_iam_policy_arns = [
     "arn:aws:iam::aws:policy/job-function/ViewOnlyAccess",
@@ -89,7 +91,5 @@ module "lambda" {
 
   context = module.this.context
 
-  depends_on = [
-    aws_iam_policy.inside,
-  ]
+  depends_on = [aws_iam_policy.inside]
 }

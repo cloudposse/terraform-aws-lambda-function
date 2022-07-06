@@ -52,16 +52,16 @@ related:
     url: "https://github.com/cloudposse/terraform-null-label"
 
 description: |-
-  This module deploys an AWS Lambda function from a zip file or from a docker image. Additionally, it creates an IAM 
-  role for the Lambda function, which optionally attaches policies to allow for Cloudwatch Logs, Cloudwatch Insights, 
+  This module deploys an AWS Lambda function from a Zip file or from a Docker image. Additionally, it creates an IAM 
+  role for the Lambda function, which optionally attaches policies to allow for CloudWatch Logs, Cloudwatch Insights, 
   VPC Access and X-Ray tracing.
-    # Example usage
 
 # How to use this module. Should be an easy example to copy and paste.
 usage: |-
   For a complete example, see [examples/complete](examples/complete).
   For automated tests of the complete example using [bats](https://github.com/bats-core/bats-core) and [Terratest](https://github.com/gruntwork-io/terratest)
   (which tests and deploys the example on AWS), see [test](test).
+  
   ```hcl
   module "lambda" {
     source  = "cloudposse/lambda-function/aws"
@@ -75,8 +75,8 @@ usage: |-
   ```
 
 examples: |-
-  Here is an example of using this module:
-  - [`examples/complete`](https://github.com/cloudposse/terraform-aws-lambda-function/) - complete example of using this module
+  - [`examples/complete`](https://github.com/cloudposse/terraform-aws-lambda-function/examples/complete) - complete example of using this module
+  - [`examples/docker-image`](https://github.com/cloudposse/terraform-aws-lambda-function/examples/docker-image) - example of using Lambda with Docker images
 
 # Other files to include in this README from the project folder
 include:
@@ -89,3 +89,5 @@ contributors:
     github: "mcalhoun"
   - name: "PePe Amengual"
     github: "jamengual"
+  - name: "Andriy Knysh"
+    github: "aknysh"

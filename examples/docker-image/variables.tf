@@ -4,18 +4,24 @@ variable "region" {
 }
 
 variable "function_name" {
-  description = "Unique name for the Lambda Function."
   type        = string
+  description = "Unique name for the Lambda Function."
 }
 
 variable "handler" {
+  type        = string
   description = "The function entrypoint in your code."
   default     = ""
-  type        = string
 }
 
 variable "runtime" {
+  type        = string
   description = "The runtime environment for the Lambda function you are uploading."
   default     = ""
+}
+
+variable "iam_policy_description" {
   type        = string
+  description = "Description of the IAM policy for the Lambda IAM role"
+  default     = "Minimum SSM read permissions for Lambda"
 }

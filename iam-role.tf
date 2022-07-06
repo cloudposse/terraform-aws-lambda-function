@@ -1,5 +1,6 @@
 resource "aws_iam_role" "this" {
-  count                = local.enabled ? 1 : 0
+  count = local.enabled ? 1 : 0
+
   name                 = "${var.function_name}-${local.region_name}"
   assume_role_policy   = join("", data.aws_iam_policy_document.assume_role_policy.*.json)
   permissions_boundary = var.permissions_boundary
@@ -13,13 +14,14 @@ data "aws_iam_policy_document" "assume_role_policy" {
 
     principals {
       type        = "Service"
-      identifiers = concat(["lambda.amazonaws.com"], var.lambda_at_edge ? ["edgelambda.amazonaws.com"] : [])
+      identifiers = concat(["lambda.amazonaws.com"], var.lambda_at_edge_enabled ? ["edgelambda.amazonaws.com"] : [])
     }
   }
 }
 
 resource "aws_iam_role_policy_attachment" "cloudwatch_logs" {
-  count      = local.enabled ? 1 : 0
+  count = local.enabled ? 1 : 0
+
   policy_arn = "arn:${local.partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
   role       = aws_iam_role.this[0].name
 }
@@ -63,8 +65,8 @@ data "aws_iam_policy_document" "ssm" {
 resource "aws_iam_policy" "ssm" {
   count = try((local.enabled && var.ssm_parameter_names != null && length(var.ssm_parameter_names) > 0), false) ? 1 : 0
 
-  description = "Provides minimum SSM read permissions."
   name        = "${var.function_name}-ssm-policy-${local.region_name}"
+  description = var.iam_policy_description
   policy      = data.aws_iam_policy_document.ssm[count.index].json
 }
 
@@ -76,7 +78,8 @@ resource "aws_iam_role_policy_attachment" "ssm" {
 }
 
 resource "aws_iam_role_policy_attachment" "custom" {
-  for_each   = local.enabled && length(var.custom_iam_policy_arns) > 0 ? var.custom_iam_policy_arns : toset([])
+  for_each = local.enabled && length(var.custom_iam_policy_arns) > 0 ? var.custom_iam_policy_arns : toset([])
+
   role       = aws_iam_role.this[0].name
   policy_arn = each.key
 }
