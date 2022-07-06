@@ -4,7 +4,7 @@ output "arn" {
 }
 
 output "invoke_arn" {
-  description = "Inkoke ARN of the lambda function"
+  description = "Invoke ARN of the lambda function"
   value       = local.enabled ? aws_lambda_function.this[0].invoke_arn : null
 }
 

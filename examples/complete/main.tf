@@ -10,6 +10,7 @@ locals {
     join("", data.aws_partition.current.*.partition),
     join("", data.aws_caller_identity.current.*.account_id),
   )
+
   policy_arn_inside = format("%s/%s", local.policy_arn_prefix, local.policy_name_inside)
 
   policy_json = jsonencode({
@@ -53,7 +54,7 @@ resource "aws_iam_policy" "inside" {
   count       = local.enabled ? 1 : 0
   name        = local.policy_name_inside
   path        = "/"
-  description = "My policy attached inside the lambda module"
+  description = "The policy attached inside the Lambda module"
 
   policy = local.policy_json
 }
@@ -62,7 +63,7 @@ resource "aws_iam_policy" "outside" {
   count       = local.enabled ? 1 : 0
   name        = local.policy_name_outside
   path        = "/"
-  description = "My policy attached outside the lambda module"
+  description = "The policy attached outside the Lambda module"
 
   policy = local.policy_json
 }
