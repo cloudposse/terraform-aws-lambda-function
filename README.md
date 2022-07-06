@@ -28,10 +28,9 @@
 
 -->
 
-This module deploys an AWS Lambda function from a zip file or from a docker image. Additionally, it creates an IAM 
-role for the Lambda function, which optionally attaches policies to allow for Cloudwatch Logs, Cloudwatch Insights, 
+This module deploys an AWS Lambda function from a Zip file or from a Docker image. Additionally, it creates an IAM 
+role for the Lambda function, which optionally attaches policies to allow for CloudWatch Logs, Cloudwatch Insights, 
 VPC Access and X-Ray tracing.
-  # Example usage
 
 ---
 
@@ -99,6 +98,7 @@ The table below correctly indicates which inputs are required.
 For a complete example, see [examples/complete](examples/complete).
 For automated tests of the complete example using [bats](https://github.com/bats-core/bats-core) and [Terratest](https://github.com/gruntwork-io/terratest)
 (which tests and deploys the example on AWS), see [test](test).
+
 ```hcl
 module "lambda" {
   source  = "cloudposse/lambda-function/aws"
@@ -116,8 +116,8 @@ module "lambda" {
 
 ## Examples
 
-Here is an example of using this module:
-- [`examples/complete`](https://github.com/cloudposse/terraform-aws-lambda-function/) - complete example of using this module
+- [`examples/complete`](https://github.com/cloudposse/terraform-aws-lambda-function/examples/complete) - complete example of using this module
+- [`examples/docker-image`](https://github.com/cloudposse/terraform-aws-lambda-function/examples/docker-image) - example of using Lambda with Docker images
 
 
 
@@ -138,7 +138,7 @@ Available targets:
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.14 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.0 |
 
 ## Providers
@@ -402,14 +402,16 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
 ### Contributors
 
 <!-- markdownlint-disable -->
-|  [![Matt Calhoun][mcalhoun_avatar]][mcalhoun_homepage]<br/>[Matt Calhoun][mcalhoun_homepage] | [![PePe Amengual][jamengual_avatar]][jamengual_homepage]<br/>[PePe Amengual][jamengual_homepage] |
-|---|---|
+|  [![Matt Calhoun][mcalhoun_avatar]][mcalhoun_homepage]<br/>[Matt Calhoun][mcalhoun_homepage] | [![PePe Amengual][jamengual_avatar]][jamengual_homepage]<br/>[PePe Amengual][jamengual_homepage] | [![Andriy Knysh][aknysh_avatar]][aknysh_homepage]<br/>[Andriy Knysh][aknysh_homepage] |
+|---|---|---|
 <!-- markdownlint-restore -->
 
   [mcalhoun_homepage]: https://github.com/mcalhoun
   [mcalhoun_avatar]: https://img.cloudposse.com/150x150/https://github.com/mcalhoun.png
   [jamengual_homepage]: https://github.com/jamengual
   [jamengual_avatar]: https://img.cloudposse.com/150x150/https://github.com/jamengual.png
+  [aknysh_homepage]: https://github.com/aknysh
+  [aknysh_avatar]: https://img.cloudposse.com/150x150/https://github.com/aknysh.png
 
 [![README Footer][readme_footer_img]][readme_footer_link]
 [![Beacon][beacon]][website]

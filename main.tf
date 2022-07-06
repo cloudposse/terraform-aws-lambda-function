@@ -1,3 +1,10 @@
+locals {
+  enabled     = module.this.enabled
+  account_id  = local.enabled ? data.aws_caller_identity.this[0].account_id : null
+  partition   = local.enabled ? data.aws_partition.this[0].partition : null
+  region_name = local.enabled ? data.aws_region.this[0].name : null
+}
+
 module "cloudwatch_log_group" {
   source  = "cloudposse/cloudwatch-logs/aws"
   version = "0.6.5"
@@ -10,7 +17,8 @@ module "cloudwatch_log_group" {
 }
 
 resource "aws_lambda_function" "this" {
-  count      = module.this.enabled ? 1 : 0
+  count = module.this.enabled ? 1 : 0
+
   depends_on = [module.cloudwatch_log_group]
 
   architectures                  = var.architectures
@@ -74,13 +82,14 @@ resource "aws_lambda_function" "this" {
   }
 }
 
-data "aws_partition" "this" { count = local.enabled ? 1 : 0 }
-data "aws_region" "this" { count = local.enabled ? 1 : 0 }
-data "aws_caller_identity" "this" { count = local.enabled ? 1 : 0 }
+data "aws_partition" "this" {
+  count = local.enabled ? 1 : 0
+}
 
-locals {
-  enabled     = module.this.enabled
-  account_id  = local.enabled ? data.aws_caller_identity.this[0].account_id : null
-  partition   = local.enabled ? data.aws_partition.this[0].partition : null
-  region_name = local.enabled ? data.aws_region.this[0].name : null
+data "aws_region" "this" {
+  count = local.enabled ? 1 : 0
+}
+
+data "aws_caller_identity" "this" {
+  count = local.enabled ? 1 : 0
 }
