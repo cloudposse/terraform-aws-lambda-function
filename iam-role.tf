@@ -65,7 +65,7 @@ data "aws_iam_policy_document" "ssm" {
 resource "aws_iam_policy" "ssm" {
   count = try((local.enabled && var.ssm_parameter_names != null && length(var.ssm_parameter_names) > 0), false) ? 1 : 0
 
-  description = "Lambda policy with minimum SSM read permissions"
+  description = "Provides minimum SSM read permissions."
   name        = "${var.function_name}-ssm-policy-${local.region_name}"
   policy      = data.aws_iam_policy_document.ssm[count.index].json
 }
