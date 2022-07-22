@@ -116,8 +116,8 @@ module "lambda" {
 
 ## Examples
 
-- [`examples/complete`](https://github.com/cloudposse/terraform-aws-lambda-function/examples/complete) - complete example of using this module
-- [`examples/docker-image`](https://github.com/cloudposse/terraform-aws-lambda-function/examples/docker-image) - example of using Lambda with Docker images
+- [`examples/complete`](https://github.com/cloudposse/terraform-aws-lambda-function/blob/main/examples/complete) - complete example of using this module
+- [`examples/docker-image`](https://github.com/cloudposse/terraform-aws-lambda-function/blob/main/examples/docker-image) - example of using Lambda with Docker images
 
 
 
