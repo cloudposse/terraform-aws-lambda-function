@@ -39,7 +39,26 @@ func TestExamplesComplete(t *testing.T) {
 
 	// Run `terraform output` to get the value of an output variable
 	arn := terraform.Output(t, terraformOptions, "arn")
-	assert.NotNil(t, arn)
+	invokeARN := terraform.Output(t, terraformOptions, "invoke_arn")
+	qualifiedARN := terraform.Output(t, terraformOptions, "qualified_arn")
+	functionName := terraform.Output(t, terraformOptions, "function_name")
+	roleName := terraform.Output(t, terraformOptions, "role_name")
+	roleARN := terraform.Output(t, terraformOptions, "role_arn")
+	cloudwatchLogGroupARN := terraform.Output(t, terraformOptions, "cloudwatch_log_group_arn")
+	cloudwatchLogGroupName := terraform.Output(t, terraformOptions, "cloudwatch_log_group_name")
+	cloudwatchEventRuleIDs := terraform.OutputList(t, terraformOptions, "cloudwatch_event_rule_ids")
+	cloudwatchEventRuleARNs := terraform.OutputList(t, terraformOptions, "cloudwatch_event_rule_arns")
+
+	assert.Contains(t, arn, "arn:aws:lambda:")
+	assert.Contains(t, invokeARN, "arn:aws:apigateway:")
+	assert.Contains(t, qualifiedARN, "arn:aws:lambda:")
+	assert.NotEmpty(t, functionName)
+	assert.NotEmpty(t, roleName)
+	assert.Contains(t, roleARN, "arn:aws:iam:")
+	assert.Contains(t, cloudwatchLogGroupARN, "arn:aws:logs:")
+	assert.NotEmpty(t, cloudwatchLogGroupName)
+	assert.NotEmpty(t, cloudwatchEventRuleIDs)
+	assert.NotEmpty(t, cloudwatchEventRuleARNs)
 
 	sess := session.Must(session.NewSessionWithOptions(session.Options{
 		SharedConfigState: session.SharedConfigEnable,

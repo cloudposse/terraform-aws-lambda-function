@@ -89,6 +89,13 @@ module "lambda" {
     # aws_iam_policy.inside[0].id, # This will result in an error message and is why we use local.policy_name_inside
   ]
 
+  cloudwatch_event_rules = [
+    {
+      name                = "minutely"
+      schedule_expression = "cron(0/1 * * * ? *)"
+    }
+  ]
+
   context = module.this.context
 
   depends_on = [aws_iam_policy.inside]

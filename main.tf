@@ -86,6 +86,14 @@ resource "aws_lambda_function" "this" {
   }
 }
 
+resource "aws_lambda_function_event_invoke_config" "this" {
+  count = local.enabled ? 1 : 0
+
+  function_name                = join("", aws_lambda_function.this[*].function_name)
+  maximum_event_age_in_seconds = var.event_invoke_config["maximum_event_age_in_seconds"]
+  maximum_retry_attempts       = var.event_invoke_config["maximum_retry_attempts"]
+}
+
 data "aws_partition" "this" {
   count = local.enabled ? 1 : 0
 }

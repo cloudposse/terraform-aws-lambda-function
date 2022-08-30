@@ -8,9 +8,20 @@ variable "architectures" {
 }
 
 variable "cloudwatch_event_rules" {
-  type        = map(any)
-  description = "Creates EventBridge (CloudWatch Events) rules for invoking the Lambda Function along with the required permissions."
-  default     = {}
+  type        = list(any)
+  description = <<-DOC
+    A list of CloudWatch Events rules for invoking the Lambda Function along with the required permissions.
+      name:
+        The name of the rule.
+      schedule_expression:
+        The scheduling expression. For example, `cron(0 20 * * ? *)` or `rate(5 minutes)`.
+        At least one of `schedule_expression` or `event_pattern` is required.
+      event_pattern:
+        The event pattern described a JSON object.
+      description:
+        The description of the rule.
+  DOC
+  default     = []
 }
 
 variable "cloudwatch_lambda_insights_enabled" {
@@ -189,12 +200,6 @@ variable "s3_object_version" {
   default     = null
 }
 
-variable "sns_subscriptions" {
-  type        = map(any)
-  description = "Creates subscriptions to SNS topics which trigger the Lambda Function. Required Lambda invocation permissions will be generated."
-  default     = {}
-}
-
 variable "source_code_hash" {
   type        = string
   description = <<EOF
@@ -259,4 +264,24 @@ variable "iam_policy_description" {
   type        = string
   description = "Description of the IAM policy for the Lambda IAM role"
   default     = "Provides minimum SSM read permissions."
+}
+
+variable "event_invoke_config" {
+  type = object(
+    {
+      maximum_event_age_in_seconds = number
+      maximum_retry_attempts       = number
+    }
+  )
+  description = <<-DOC
+    Manages an asynchronous invocation configuration for a Lambda Function.
+      maximum_event_age_in_seconds:
+         Maximum age of a request that Lambda sends to a function for processing in seconds. Valid values between 60 and 21600.
+      maximum_retry_attempts :
+        Maximum number of times to retry when the function returns an error. Valid values between 0 and 2.
+  DOC
+  default = {
+    maximum_event_age_in_seconds = 360
+    maximum_retry_attempts       = 0
+  }
 }
