@@ -79,6 +79,13 @@ resource "aws_lambda_function" "this" {
     }
   }
 
+  dynamic "ephemeral_storage" {
+    for_each = var.ephemeral_storage_size != null ? [var.ephemeral_storage_size] : []
+    content {
+      size = var.ephemeral_storage_size
+    }
+  }
+
   depends_on = [module.cloudwatch_log_group]
 
   lifecycle {

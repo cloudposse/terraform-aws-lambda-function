@@ -55,6 +55,12 @@ variable "lambda_environment" {
   default     = null
 }
 
+variable "ephemeral_storage_size" {
+  type        = number
+  description = "The amount of storage in GB to allocate for the Lambda function's file system."
+  default     = null
+}
+
 variable "event_source_mappings" {
   type        = any
   description = <<EOF

@@ -25,3 +25,9 @@ variable "iam_policy_description" {
   description = "Description of the IAM policy for the Lambda IAM role"
   default     = "Minimum SSM read permissions for Lambda"
 }
+
+variable "ephemeral_storage_size" {
+  type        = number
+  description = "The amount of storage available to the function at runtime. Defaults to 512."
+  default     = 512
+}
