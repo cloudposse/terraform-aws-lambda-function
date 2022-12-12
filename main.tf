@@ -82,7 +82,7 @@ resource "aws_lambda_function" "this" {
   depends_on = [module.cloudwatch_log_group]
 
   lifecycle {
-    ignore_changes = var.ignore_external_function_updates ? [last_modified, image_uri] : [last_modified]
+    ignore_changes = [last_modified, image_uri]
   }
 
 }
