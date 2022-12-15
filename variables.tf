@@ -239,6 +239,19 @@ variable "vpc_config" {
   default     = null
 }
 
+variable "file_system_config" {
+  type = object({
+    arn              = string
+    local_mount_path = string
+  })
+  description = <<EOF
+  EFS file system access point ARN (arn) and Local mount path inside the lambda function (local_mount_path) that is used to
+  connect an Amazon Elastic File System (EFS) file system to a Lambda function to share data across function invocations,
+  access existing data including large files, and save function state.
+  EOF
+  default     = null
+}
+
 variable "custom_iam_policy_arns" {
   type        = set(string)
   description = "ARNs of custom policies to be attached to the lambda role"

@@ -47,6 +47,35 @@ resource "aws_iam_role_policy_attachment" "xray" {
   role       = aws_iam_role.this[0].name
 }
 
+# Allow Lambda to access specific EFS"
+data "aws_iam_policy_document" "file_system" {
+  count = local.enabled && var.file_system_config != null ? 1 : 0
+
+  statement {
+    actions = [
+      "elasticfilesystem:ClientMount",
+      "elasticfilesystem:ClientWrite",
+    ]
+
+    resources = ["arn:${local.partition}:elasticfilesystem:${local.region_name}:${local.account_id}:access-point/${var.file_system_config["arn"]}"]
+  }
+}
+
+resource "aws_iam_policy" "file_system" {
+  count = local.enabled && var.file_system_config != null ? 1 : 0
+
+  name        = "${var.function_name}-filesystem-policy-${local.region_name}"
+  description = var.iam_policy_description
+  policy      = data.aws_iam_policy_document.file_system[count.index].json
+}
+
+resource "aws_iam_role_policy_attachment" "file_system" {
+  count = local.enabled && var.file_system_config != null ? 1 : 0
+
+  policy_arn = aws_iam_policy.file_system[count.index].arn
+  role       = aws_iam_role.this[0].name
+}
+
 # Allow Lambda to access specific SSM parameters
 data "aws_iam_policy_document" "ssm" {
   count = try((local.enabled && var.ssm_parameter_names != null && length(var.ssm_parameter_names) > 0), false) ? 1 : 0
