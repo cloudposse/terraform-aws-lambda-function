@@ -57,7 +57,7 @@ data "aws_iam_policy_document" "file_system" {
       "elasticfilesystem:ClientWrite",
     ]
 
-    resources = ["arn:${local.partition}:elasticfilesystem:${local.region_name}:${local.account_id}:access-point/${var.file_system_config["arn"]}"]
+    resources = [var.file_system_config["arn"]]
   }
 }
 
