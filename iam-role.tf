@@ -65,7 +65,7 @@ resource "aws_iam_policy" "file_system" {
   count = local.enabled && var.file_system_config != null ? 1 : 0
 
   name        = "${var.function_name}-filesystem-policy-${local.region_name}"
-  description = var.iam_policy_description
+  description = "Provides RW access to mount point."
   policy      = data.aws_iam_policy_document.file_system[count.index].json
 }
 
