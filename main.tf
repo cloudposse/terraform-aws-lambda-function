@@ -12,7 +12,7 @@ module "cloudwatch_log_group" {
   iam_role_enabled  = false
   kms_key_arn       = var.cloudwatch_logs_kms_key_arn
   retention_in_days = var.cloudwatch_logs_retention_in_days
-  attributes        = ["lambda", var.function_name]
+  name              = "/aws/lambda/${var.function_name}"
   context           = module.this.context
 }
 
