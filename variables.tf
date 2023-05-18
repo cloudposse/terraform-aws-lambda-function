@@ -57,7 +57,10 @@ variable "lambda_environment" {
 
 variable "ephemeral_storage_size" {
   type        = number
-  description = "The amount of storage in GB to allocate for the Lambda function's file system."
+  description = <<EOF
+  The size of the Lambda function Ephemeral storage (/tmp) represented in MB. 
+  The minimum supported ephemeral_storage value defaults to 512MB and the maximum supported value is 10240MB.
+  EOF
   default     = null
 }
 
