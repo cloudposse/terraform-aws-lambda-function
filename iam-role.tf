@@ -52,6 +52,7 @@ data "aws_iam_policy_document" "file_system" {
   count = local.enabled && var.file_system_config != null ? 1 : 0
 
   statement {
+    sid = "EFSFileSystemSid"
     actions = [
       "elasticfilesystem:ClientMount",
       "elasticfilesystem:ClientWrite",
