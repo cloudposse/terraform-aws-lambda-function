@@ -82,6 +82,7 @@ module "lambda" {
   handler                = var.handler
   runtime                = var.runtime
   iam_policy_description = var.iam_policy_description
+  ephemeral_storage_size = var.ephemeral_storage_size
 
   custom_iam_policy_arns = [
     "arn:aws:iam::aws:policy/job-function/ViewOnlyAccess",

@@ -7,12 +7,6 @@ variable "architectures" {
   default     = null
 }
 
-variable "cloudwatch_event_rules" {
-  type        = map(any)
-  description = "Creates EventBridge (CloudWatch Events) rules for invoking the Lambda Function along with the required permissions."
-  default     = {}
-}
-
 variable "cloudwatch_lambda_insights_enabled" {
   type        = bool
   description = "Enable CloudWatch Lambda Insights for the Lambda Function."
@@ -35,12 +29,6 @@ variable "cloudwatch_logs_kms_key_arn" {
   default     = null
 }
 
-variable "cloudwatch_log_subscription_filters" {
-  type        = map(any)
-  description = "CloudWatch Logs subscription filter resources. Currently supports only Lambda functions as destinations."
-  default     = {}
-}
-
 variable "description" {
   type        = string
   description = "Description of what the Lambda Function does."
@@ -55,13 +43,13 @@ variable "lambda_environment" {
   default     = null
 }
 
-variable "event_source_mappings" {
-  type        = any
+variable "ephemeral_storage_size" {
+  type        = number
   description = <<EOF
-  Creates event source mappings to allow the Lambda function to get events from Kinesis, DynamoDB and SQS. The IAM role
-  of this Lambda function will be enhanced with necessary minimum permissions to get those events.
+  The size of the Lambda function Ephemeral storage (/tmp) represented in MB.
+  The minimum supported ephemeral_storage value defaults to 512MB and the maximum supported value is 10240MB.
   EOF
-  default     = {}
+  default     = null
 }
 
 variable "filename" {
@@ -73,15 +61,6 @@ variable "filename" {
 variable "function_name" {
   type        = string
   description = "Unique name for the Lambda Function."
-}
-
-variable "ignore_external_function_updates" {
-  type        = bool
-  description = <<EOF
-  Ignore updates to the Lambda Function executed externally to the Terraform lifecycle. Set this to `true` if you're
-  using CodeDeploy, aws CLI or other external tools to update the Lambda Function code."
-  EOF
-  default     = false
 }
 
 variable "handler" {
@@ -187,12 +166,6 @@ variable "s3_object_version" {
   type        = string
   description = "The object version containing the function's deployment package. Conflicts with filename and image_uri."
   default     = null
-}
-
-variable "sns_subscriptions" {
-  type        = map(any)
-  description = "Creates subscriptions to SNS topics which trigger the Lambda Function. Required Lambda invocation permissions will be generated."
-  default     = {}
 }
 
 variable "source_code_hash" {
