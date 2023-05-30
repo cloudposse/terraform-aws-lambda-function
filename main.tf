@@ -9,11 +9,13 @@ module "cloudwatch_log_group" {
   source  = "cloudposse/cloudwatch-logs/aws"
   version = "0.6.6"
 
+  enabled = module.this.enabled
+
   iam_role_enabled  = false
   kms_key_arn       = var.cloudwatch_logs_kms_key_arn
   retention_in_days = var.cloudwatch_logs_retention_in_days
-  attributes        = ["lambda", var.function_name]
-  context           = module.this.context
+  name              = "/aws/lambda/${var.function_name}"
+  tags              = module.this.tags
 }
 
 resource "aws_lambda_function" "this" {
