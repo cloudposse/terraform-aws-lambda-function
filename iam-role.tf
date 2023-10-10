@@ -1,3 +1,7 @@
+locals {
+  custom_iam_policy_arns_map = length(var.custom_iam_policy_arns) > 0 ? { for i, arn in var.custom_iam_policy_arns : i => arn } : {}
+}
+
 resource "aws_iam_role" "this" {
   count = local.enabled ? 1 : 0
 
@@ -82,8 +86,8 @@ resource "aws_iam_role_policy_attachment" "ssm" {
 }
 
 resource "aws_iam_role_policy_attachment" "custom" {
-  for_each = local.enabled && length(var.custom_iam_policy_arns) > 0 ? var.custom_iam_policy_arns : toset([])
+  for_each = local.enabled ? local.custom_iam_policy_arns_map : {}
 
   role       = aws_iam_role.this[0].name
-  policy_arn = each.key
+  policy_arn = each.value
 }
