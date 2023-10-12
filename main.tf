@@ -39,7 +39,7 @@ resource "aws_lambda_function" "this" {
   s3_key                         = var.s3_key
   s3_object_version              = var.s3_object_version
   source_code_hash               = var.source_code_hash
-  tags                           = var.tags
+  tags                           = module.this.tags
   timeout                        = var.timeout
 
   dynamic "dead_letter_config" {
