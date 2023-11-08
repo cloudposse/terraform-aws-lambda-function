@@ -9,11 +9,13 @@ module "cloudwatch_log_group" {
   source  = "cloudposse/cloudwatch-logs/aws"
   version = "0.6.6"
 
+  enabled = module.this.enabled
+
   iam_role_enabled  = false
   kms_key_arn       = var.cloudwatch_logs_kms_key_arn
   retention_in_days = var.cloudwatch_logs_retention_in_days
-  attributes        = ["lambda", var.function_name]
-  context           = module.this.context
+  name              = "/aws/lambda/${var.function_name}"
+  tags              = module.this.tags
 }
 
 resource "aws_lambda_function" "this" {
@@ -37,7 +39,7 @@ resource "aws_lambda_function" "this" {
   s3_key                         = var.s3_key
   s3_object_version              = var.s3_object_version
   source_code_hash               = var.source_code_hash
-  tags                           = var.tags
+  tags                           = module.this.tags
   timeout                        = var.timeout
 
   dynamic "dead_letter_config" {
@@ -84,6 +86,13 @@ resource "aws_lambda_function" "this" {
     content {
       arn              = file_system_config.value.arn
       local_mount_path = file_system_config.value.local_mount_path
+    }
+  }
+
+  dynamic "ephemeral_storage" {
+    for_each = var.ephemeral_storage_size != null ? [var.ephemeral_storage_size] : []
+    content {
+      size = var.ephemeral_storage_size
     }
   }
 
