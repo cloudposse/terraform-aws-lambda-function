@@ -141,6 +141,12 @@ variable "reserved_concurrent_executions" {
   default     = -1
 }
 
+variable "role_name" {
+  type        = string
+  description = "The rolename used for the Lambda Function. If not provided, a default role name will be used."
+  default     = null
+}
+
 variable "runtime" {
   type        = string
   description = "The runtime environment for the Lambda function you are uploading."
