@@ -90,6 +90,19 @@ module "lambda" {
     # aws_iam_policy.inside[0].id, # This will result in an error message and is why we use local.policy_name_inside
   ]
 
+  inline_iam_policy = <<-JSON
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Deny",
+          "Action": "ec2:DescribeInstanceTypes",
+          "Resource": "*"
+        }
+      ]
+    }
+  JSON
+
   context = module.this.context
 
   depends_on = [aws_iam_policy.inside]
