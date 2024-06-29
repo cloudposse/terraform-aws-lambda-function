@@ -91,3 +91,10 @@ resource "aws_iam_role_policy_attachment" "custom" {
   role       = aws_iam_role.this[0].name
   policy_arn = each.value
 }
+
+resource "aws_iam_role_policy" "inline" {
+  count = try((local.enabled && var.inline_iam_policy != null), false) ? 1 : 0
+
+  role   = aws_iam_role.this[0].name
+  policy = var.inline_iam_policy
+}
