@@ -103,7 +103,24 @@ module "lambda" {
     }
   JSON
 
+  invoke_function_permissions = [
+    {
+      principal  = "s3.amazonaws.com"
+      source_arn = aws_s3_bucket.example.arn
+    }
+  ]
+
   context = module.this.context
 
   depends_on = [aws_iam_policy.inside]
+}
+
+resource "aws_s3_bucket" "example" {}
+
+resource "aws_s3_bucket_notification" "example" {
+  bucket = aws_s3_bucket.example.id
+  lambda_function {
+    lambda_function_arn = module.lambda.arn
+    events              = ["s3:ObjectCreated:*"]
+  }
 }
