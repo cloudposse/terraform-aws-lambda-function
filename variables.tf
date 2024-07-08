@@ -245,3 +245,12 @@ variable "inline_iam_policy" {
   description = "Inline policy document (JSON) to attach to the lambda role"
   default     = null
 }
+
+variable "invoke_function_permissions" {
+  type = list(object({
+    principal  = string
+    source_arn = string
+  }))
+  description = "Defines which external source(s) can invoke this function (action 'lambda:InvokeFunction'). Attributes map to those of https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_permission. NOTE: to keep things simple, we only expose a subset of said attributes. If a more complex configuration is needed, declare the necessary lambda permissions outside of this module"
+  default     = []
+}
