@@ -15,7 +15,7 @@ module "cloudwatch_log_group" {
   kms_key_arn       = var.cloudwatch_logs_kms_key_arn
   retention_in_days = var.cloudwatch_logs_retention_in_days
   name              = "/aws/lambda/${var.function_name}"
-  tags              = module.this.tags
+  context           = module.this.context
 }
 
 resource "aws_lambda_function" "this" {
