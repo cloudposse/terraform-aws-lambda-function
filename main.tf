@@ -114,3 +114,4 @@ resource "aws_lambda_event_source_mapping" "trigger" {
   starting_position           = var.source_mapping_starting_position
   starting_position_timestamp = var.source_mapping_starting_position == "AT_TIMESTAMP" && var.source_mapping_starting_position_timestamp != null ? var.source_mapping_starting_position_timestamp : null
 }
+
