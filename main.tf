@@ -104,3 +104,13 @@ data "aws_region" "this" {
 data "aws_caller_identity" "this" {
   count = local.enabled ? 1 : 0
 }
+
+resource "aws_lambda_event_source_mapping" "trigger" {
+  count = local.enabled && var.source_mapping_enabled ? 1 : 0
+
+  function_name               = join("", aws_lambda_function.this[*].function_name)
+  event_source_arn            = var.source_mapping_arn
+  batch_size                  = var.source_mapping_batch_size
+  starting_position           = var.source_mapping_starting_position
+  starting_position_timestamp = var.source_mapping_starting_position == "AT_TIMESTAMP" && var.source_mapping_starting_position_timestamp != null ? var.source_mapping_starting_position_timestamp : null
+}
