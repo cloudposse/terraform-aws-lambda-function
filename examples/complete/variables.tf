@@ -31,3 +31,9 @@ variable "ephemeral_storage_size" {
   description = "The amount of storage available to the function at runtime. Defaults to 512."
   default     = 512
 }
+
+variable "source_mapping_enabled" {
+  type        = bool
+  description = "Enables the source mapping to set a Kinesis stream, a DynamoDB stream, or SQS queue as trigger for lambda."
+  default     = false
+}
