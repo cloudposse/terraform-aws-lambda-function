@@ -7,8 +7,8 @@ locals {
 
   policy_arn_prefix = format(
     "arn:%s:iam::%s:policy",
-    join("", data.aws_partition.current[*].partition),
-    join("", data.aws_caller_identity.current[*].account_id),
+    join("", data.aws_partition.current.*.partition),
+    join("", data.aws_caller_identity.current.*.account_id),
   )
 
   policy_arn_inside = format("%s/%s", local.policy_arn_prefix, local.policy_name_inside)
@@ -77,13 +77,16 @@ resource "aws_iam_role_policy_attachment" "outside" {
 module "lambda" {
   source = "../.."
 
-  filename               = join("", data.archive_file.lambda_zip[*].output_path)
-  function_name          = module.label.id
-  handler                = var.handler
-  runtime                = var.runtime
-  iam_policy_description = var.iam_policy_description
-  ephemeral_storage_size = var.ephemeral_storage_size
-  source_mapping_enabled = var.source_mapping_enabled
+  filename                         = join("", data.archive_file.lambda_zip.*.output_path)
+  function_name                    = module.label.id
+  handler                          = var.handler
+  runtime                          = var.runtime
+  iam_policy_description           = var.iam_policy_description
+  ephemeral_storage_size           = var.ephemeral_storage_size
+  source_mapping_enabled           = var.source_mapping_enabled
+  source_mapping_batch_size        = var.source_mapping_batch_size
+  source_mapping_arn               = var.source_mapping_arn
+  source_mapping_starting_position = var.source_mapping_starting_position
 
   custom_iam_policy_arns = [
     "arn:aws:iam::aws:policy/job-function/ViewOnlyAccess",
