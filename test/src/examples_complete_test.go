@@ -43,7 +43,7 @@ func TestExamplesComplete(t *testing.T) {
 	role_name := terraform.Output(t, terraformOptions, "role_name")
 	cloudwatch_log_group_name := terraform.Output(t, terraformOptions, "cloudwatch_log_group_name")
 
-  // Validate values returned by terraform
+	// Validate values returned by terraform
 	assert.NotNil(t, arn)
 	assert.Equal(t, "eg-ue2-test-" + randID + "-example-complete", function_name)
 	assert.Equal(t, "eg-ue2-test-" + randID + "-example-complete-us-east-2", role_name)
