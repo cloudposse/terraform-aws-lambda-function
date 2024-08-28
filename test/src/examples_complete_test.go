@@ -45,9 +45,9 @@ func TestExamplesComplete(t *testing.T) {
 
   // Validate values returned by terraform
 	assert.NotNil(t, arn)
-	assert.Equal(t, "todo", function_name)
-	assert.Equal(t, "todo", role_name)
-	assert.Equal(t, "todo", cloudwatch_log_group_name)
+	assert.Equal(t, "eg-ue2-test-" + randID + "-example-complete", function_name)
+	assert.Equal(t, "eg-ue2-test-" + randID + "-example-complete-us-east-2", role_name)
+	assert.Equal(t, "/aws/lambda/eg-ue2-test-" + randID + "-example-complete", cloudwatch_log_group_name)
 
 	sess := session.Must(session.NewSessionWithOptions(session.Options{
 		SharedConfigState: session.SharedConfigEnable,
