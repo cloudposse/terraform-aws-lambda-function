@@ -30,5 +30,5 @@ output "role_arn" {
 
 output "cloudwatch_log_group_name" {
   description = "Name of Cloudwatch log group"
-  value       = local.enabled ? module.cloudwatch_log_group.name : null
+  value       = local.enabled ? module.cloudwatch_log_group.log_group_name : null
 }
