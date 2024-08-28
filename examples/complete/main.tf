@@ -74,18 +74,30 @@ resource "aws_iam_role_policy_attachment" "outside" {
   policy_arn = aws_iam_policy.outside[0].arn
 }
 
+module "dynamodb_table" {
+  source  = "cloudposse/dynamodb/aws"
+  version = "0.37.0"
+
+  name                   = "first"
+  hash_key               = "HashKey"
+  range_key              = "RangeKey"
+  enable_autoscaler      = false
+
+  context = module.this.context
+}
+
 module "lambda" {
   source = "../.."
 
-  filename                         = join("", data.archive_file.lambda_zip.*.output_path)
-  function_name                    = module.label.id
-  handler                          = var.handler
-  runtime                          = var.runtime
-  iam_policy_description           = var.iam_policy_description
-  ephemeral_storage_size           = var.ephemeral_storage_size
-  source_mapping_enabled           = var.source_mapping_enabled
-  source_mapping_batch_size        = var.source_mapping_batch_size
-  source_mapping_arn               = var.source_mapping_arn
+  filename               = join("", data.archive_file.lambda_zip.*.output_path)
+  function_name          = module.label.id
+  handler                = var.handler
+  runtime                = var.runtime
+  iam_policy_description = var.iam_policy_description
+  ephemeral_storage_size = var.ephemeral_storage_size
+  source_mapping_enabled    = var.source_mapping_enabled
+  source_mapping_batch_size = var.source_mapping_batch_size
+  source_mapping_arn        = module.dynamodb_table.table_stream_arn
   source_mapping_starting_position = var.source_mapping_starting_position
 
   custom_iam_policy_arns = [
