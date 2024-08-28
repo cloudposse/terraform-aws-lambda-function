@@ -27,3 +27,8 @@ output "role_arn" {
   description = "Lambda IAM role ARN"
   value       = local.enabled ? aws_iam_role.this[0].arn : null
 }
+
+output "cloudwatch_log_group_name" {
+  description = "Name of Cloudwatch log group"
+  value       = local.enabled ? module.cloudwatch_log_group.name : null
+}

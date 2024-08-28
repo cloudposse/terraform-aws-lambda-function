@@ -39,7 +39,15 @@ func TestExamplesComplete(t *testing.T) {
 
 	// Run `terraform output` to get the value of an output variable
 	arn := terraform.Output(t, terraformOptions, "arn")
+	function_name := terraform.Output(t, terraformOptions, "function_name")
+  role_name := terraform.Output(t, terraformOptions, "role_name")
+  cloudwatch_log_group_name := terraform.Output(t, terraformOptions, "cloudwatch_log_group_name")
+
+  // Validate values returned by terraform
 	assert.NotNil(t, arn)
+  assert.Equal(t, "todo", function_name)
+  assert.Equal(t, "todo", role_name)
+  assert.Equal(t, "todo", cloudwatch_log_group_name)
 
 	sess := session.Must(session.NewSessionWithOptions(session.Options{
 		SharedConfigState: session.SharedConfigEnable,
