@@ -16,6 +16,7 @@ data "aws_iam_policy_document" "assume_role_policy" {
   count = local.enabled ? 1 : 0
 
   statement {
+    sid     = ""
     actions = ["sts:AssumeRole"]
 
     principals {
@@ -58,6 +59,7 @@ data "aws_iam_policy_document" "ssm" {
   count = try((local.enabled && var.ssm_parameter_names != null && length(var.ssm_parameter_names) > 0), false) ? 1 : 0
 
   statement {
+    sid = ""
     actions = [
       "ssm:GetParameter",
       "ssm:GetParameters",
