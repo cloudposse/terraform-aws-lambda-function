@@ -7,8 +7,8 @@ locals {
 
   policy_arn_prefix = format(
     "arn:%s:iam::%s:policy",
-    join("", data.aws_partition.current.*.partition),
-    join("", data.aws_caller_identity.current.*.account_id),
+    join("", data.aws_partition.current.[*].partition),
+    join("", data.aws_caller_identity.current.[*].account_id),
   )
 
   policy_arn_inside = format("%s/%s", local.policy_arn_prefix, local.policy_name_inside)
