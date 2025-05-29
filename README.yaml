@@ -22,7 +22,7 @@ badges:
     url: https://github.com/cloudposse/terraform-aws-lambda-function/commits
   - name: Slack Community
     image: https://slack.cloudposse.com/for-the-badge.svg
-    url: https://slack.cloudposse.com
+    url: https://cloudposse.com/slack
 references:
   - name: "Cloud Posse Documentation"
     url: "https://docs.cloudposse.com"
@@ -37,6 +37,8 @@ references:
     description: "The required_version setting can be used to constrain which versions of the Terraform CLI can be used with your configuration"
     url: "https://www.terraform.io/docs/language/settings/index.html#specifying-a-required-terraform-version"
 
+
+# List any related terraform modules that this module may be used with or that this module depends on.
 
 # List any related terraform modules that this module may be used with or that this module depends on.
 related:
@@ -72,9 +74,5 @@ examples: |-
   - [`examples/docker-image`](https://github.com/cloudposse/terraform-aws-lambda-function/blob/main/examples/docker-image) - example of using Lambda with Docker images
 
 # Other files to include in this README from the project folder
-include:
-  - "docs/targets.md"
-  - "docs/terraform.md"
-
-# Contributors to this project
+include: []
 contributors: []
