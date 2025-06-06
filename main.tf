@@ -7,7 +7,7 @@ locals {
 
 module "cloudwatch_log_group" {
   source  = "cloudposse/cloudwatch-logs/aws"
-  version = "0.6.6"
+  version = "0.6.9"
 
   enabled = module.this.enabled
 
