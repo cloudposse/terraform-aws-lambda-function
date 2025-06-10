@@ -1,6 +1,8 @@
 module github.com/cloudposse/terraform-aws-lambda-function
 
-go 1.18
+go 1.24
+
+toolchain go1.24.0
 
 require (
 	github.com/aws/aws-sdk-go v1.44.122
