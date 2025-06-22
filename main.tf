@@ -89,7 +89,15 @@ resource "aws_lambda_function" "this" {
     }
   }
 
-  depends_on = [module.cloudwatch_log_group]
+  depends_on = [
+    module.cloudwatch_log_group,
+    aws_iam_role_policy_attachment.cloudwatch_insights,
+    aws_iam_role_policy_attachment.cloudwatch_logs,
+    aws_iam_role_policy_attachment.custom,
+    aws_iam_role_policy_attachment.ssm,
+    aws_iam_role_policy_attachment.vpc_access,
+    aws_iam_role_policy_attachment.xray
+  ]
 
   lifecycle {
     ignore_changes = [last_modified]
