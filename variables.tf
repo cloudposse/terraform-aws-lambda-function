@@ -248,9 +248,16 @@ variable "inline_iam_policy" {
 
 variable "invoke_function_permissions" {
   type = list(object({
-    principal  = string
-    source_arn = string
+    principal      = string
+    source_arn     = optional(string)
+    source_account = optional(string)
   }))
-  description = "Defines which external source(s) can invoke this function (action 'lambda:InvokeFunction'). Attributes map to those of https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_permission. NOTE: to keep things simple, we only expose a subset of said attributes. If a more complex configuration is needed, declare the necessary lambda permissions outside of this module"
+  description = <<EOF
+  Defines which external source(s) can invoke this function (action 'lambda:InvokeFunction'). Attributes map to those of https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_permission. 
+  - principal: The AWS service or account that will invoke the function
+  - source_arn: (Optional) The ARN of the specific resource that will invoke the function
+  - source_account: (Optional) The AWS account ID that is allowed to invoke the function. Used to restrict cross-account access when needed.
+  NOTE: to keep things simple, we only expose a subset of said attributes. If a more complex configuration is needed, declare the necessary lambda permissions outside of this module
+  EOF
   default     = []
 }
