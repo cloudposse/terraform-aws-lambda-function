@@ -105,8 +105,9 @@ module "lambda" {
 
   invoke_function_permissions = [
     {
-      principal  = "s3.amazonaws.com"
-      source_arn = join("", aws_s3_bucket.example[*].arn)
+      principal      = "s3.amazonaws.com"
+      source_arn     = join("", aws_s3_bucket.example[*].arn)
+      source_account = join("", data.aws_caller_identity.current[*].account_id)
     }
   ]
 
