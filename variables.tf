@@ -256,7 +256,7 @@ variable "invoke_function_permissions" {
   Defines which external source(s) can invoke this function (action 'lambda:InvokeFunction'). Attributes map to those of https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_permission. 
   - principal: The AWS service or account that will invoke the function
   - source_arn: (Optional) The ARN of the specific resource that will invoke the function
-  - source_account: (Optional) The AWS account ID that is allowed to invoke the function. Used to restrict cross-account access when needed.
+  - source_account: (Optional) The AWS account ID that is allowed to invoke the function. Used to restrict cross-account access when needed. This must be specified to satisfy the config rule [lambda-function-public-access-prohibited](https://docs.aws.amazon.com/config/latest/developerguide/lambda-function-public-access-prohibited.html).
   NOTE: to keep things simple, we only expose a subset of said attributes. If a more complex configuration is needed, declare the necessary lambda permissions outside of this module
   EOF
   default     = []
