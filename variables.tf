@@ -58,6 +58,19 @@ variable "filename" {
   default     = null
 }
 
+variable "file_system_config" {
+  type = object({
+    arn              = string
+    local_mount_path = string
+  })
+  description = <<EOF
+  The Lambda file system configuration block with two required arguments:
+  - *arn* - The ARN of the EFS file system to mount.
+  - *local_mount_path* - The path where the file system is mounted in the Lambda execution environment.
+  EOF
+  default     = null
+}
+
 variable "function_name" {
   type        = string
   description = "Unique name for the Lambda Function."

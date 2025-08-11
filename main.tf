@@ -89,6 +89,14 @@ resource "aws_lambda_function" "this" {
     }
   }
 
+  dynamic "file_system_config" {
+    for_each = var.file_system_config != null ? [var.file_system_config] : []
+    content {
+      arn              = file_system_config.value.arn
+      local_mount_path = file_system_config.value.local_mount_path
+    }
+  }
+
   depends_on = [module.cloudwatch_log_group]
 
   lifecycle {
