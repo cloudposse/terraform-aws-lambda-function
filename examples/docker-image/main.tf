@@ -45,7 +45,7 @@ resource "null_resource" "docker_login" {
   count = module.this.enabled ? 1 : 0
 
   provisioner "local-exec" {
-    command = "aws ecr get-login-password --region ${join("", data.aws_region.this.*.name)} | docker login --username AWS --password-stdin ${join("", data.aws_caller_identity.this.*.account_id)}.dkr.ecr.${join("", data.aws_region.this.*.name)}.amazonaws.com"
+    command = "aws ecr get-login-password --region ${join("", data.aws_region.this.*.region)} | docker login --username AWS --password-stdin ${join("", data.aws_caller_identity.this.*.account_id)}.dkr.ecr.${join("", data.aws_region.this.*.region)}.amazonaws.com"
   }
 
   depends_on = [null_resource.docker_build]
