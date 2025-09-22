@@ -18,7 +18,7 @@ module "label" {
 # pipeline. It is only done here for convenience and so that the example can be run locally.
 module "ecr" {
   source  = "cloudposse/ecr/aws"
-  version = "0.34.0"
+  version = "1.0.0"
   name    = module.label.id
 
   context = module.this.context
