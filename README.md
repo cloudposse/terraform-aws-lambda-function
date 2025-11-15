@@ -4,7 +4,7 @@
 <a href="https://cpco.io/homepage"><img src="https://github.com/cloudposse/terraform-aws-lambda-function/blob/main/.github/banner.png?raw=true" alt="Project Banner"/></a><br/>
 
 
-<p align="right"><a href="https://github.com/cloudposse/terraform-aws-lambda-function/releases/latest"><img src="https://img.shields.io/github/release/cloudposse/terraform-aws-lambda-function.svg?style=for-the-badge" alt="Latest Release"/></a><a href="https://github.com/cloudposse/terraform-aws-lambda-function/commits"><img src="https://img.shields.io/github/last-commit/cloudposse/terraform-aws-lambda-function.svg?style=for-the-badge" alt="Last Updated"/></a><a href="https://cloudposse.com/slack"><img src="https://slack.cloudposse.com/for-the-badge.svg" alt="Slack Community"/></a><a href="https://cloudposse.com/support/"><img src="https://img.shields.io/badge/Get_Support-success.svg?style=for-the-badge" alt="Get Support"/></a>
+<p align="right"><a href="https://github.com/cloudposse/terraform-aws-lambda-function/releases/latest"><img src="https://img.shields.io/github/release/cloudposse/terraform-aws-lambda-function.svg?style=for-the-badge" alt="Latest Release"/></a><a href="https://github.com/cloudposse/terraform-aws-lambda-function/commits"><img src="https://img.shields.io/github/last-commit/cloudposse/terraform-aws-lambda-function.svg?style=for-the-badge" alt="Last Updated"/></a><a href="https://cloudposse.com/slack"><img src="https://slack.cloudposse.com/for-the-badge.svg" alt="Slack Community"/></a>
 
 </p>
 <!-- markdownlint-restore -->
@@ -30,8 +30,8 @@
 
 -->
 
-This module deploys an AWS Lambda function from a Zip file or from a Docker image. Additionally, it creates an IAM 
-role for the Lambda function, which optionally attaches policies to allow for CloudWatch Logs, Cloudwatch Insights, 
+This module deploys an AWS Lambda function from a Zip file or from a Docker image. Additionally, it creates an IAM
+role for the Lambda function, which optionally attaches policies to allow for CloudWatch Logs, Cloudwatch Insights,
 VPC Access and X-Ray tracing.
 
 
@@ -82,6 +82,10 @@ module "lambda" {
 
 - [`examples/complete`](https://github.com/cloudposse/terraform-aws-lambda-function/blob/main/examples/complete) - complete example of using this module
 - [`examples/docker-image`](https://github.com/cloudposse/terraform-aws-lambda-function/blob/main/examples/docker-image) - example of using Lambda with Docker images
+
+
+
+
 
 
 
@@ -147,6 +151,7 @@ module "lambda" {
 | <a name="input_enabled"></a> [enabled](#input\_enabled) | Set to false to prevent the module from creating any resources | `bool` | `null` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | ID element. Usually used for region e.g. 'uw2', 'us-west-2', OR role 'prod', 'staging', 'dev', 'UAT' | `string` | `null` | no |
 | <a name="input_ephemeral_storage_size"></a> [ephemeral\_storage\_size](#input\_ephemeral\_storage\_size) | The size of the Lambda function Ephemeral storage (/tmp) represented in MB.<br/>  The minimum supported ephemeral\_storage value defaults to 512MB and the maximum supported value is 10240MB. | `number` | `null` | no |
+| <a name="input_file_system_config"></a> [file\_system\_config](#input\_file\_system\_config) | The Lambda file system configuration block with two required arguments:<br/>  - *arn* - The ARN of the EFS file system to mount.<br/>  - *local\_mount\_path* - The path where the file system is mounted in the Lambda execution environment. | <pre>object({<br/>    arn              = string<br/>    local_mount_path = string<br/>  })</pre> | `null` | no |
 | <a name="input_filename"></a> [filename](#input\_filename) | The path to the function's deployment package within the local filesystem. If defined, The s3\_-prefixed options and image\_uri cannot be used. | `string` | `null` | no |
 | <a name="input_function_name"></a> [function\_name](#input\_function\_name) | Unique name for the Lambda Function. | `string` | n/a | yes |
 | <a name="input_handler"></a> [handler](#input\_handler) | The function entrypoint in your code. | `string` | `null` | no |
@@ -198,11 +203,6 @@ module "lambda" {
 | <a name="output_role_arn"></a> [role\_arn](#output\_role\_arn) | Lambda IAM role ARN |
 | <a name="output_role_name"></a> [role\_name](#output\_role\_name) | Lambda IAM role name |
 <!-- markdownlint-restore -->
-
-
-
-
-
 
 
 ## Related Projects
