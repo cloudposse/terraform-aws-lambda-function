@@ -29,6 +29,12 @@ variable "cloudwatch_logs_kms_key_arn" {
   default     = null
 }
 
+variable "cloudwatch_logs_log_group_name" {
+  type        = string
+  description = "Explicit CloudWatch log group name. If null, defaults to /aws/lambda/{function_name}."
+  default     = null
+}
+
 variable "description" {
   type        = string
   description = "Description of what the Lambda Function does."

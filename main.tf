@@ -14,7 +14,8 @@ module "cloudwatch_log_group" {
   iam_role_enabled  = false
   kms_key_arn       = var.cloudwatch_logs_kms_key_arn
   retention_in_days = var.cloudwatch_logs_retention_in_days
-  name              = "/aws/lambda/${var.function_name}"
+  name              = coalesce(var.cloudwatch_logs_log_group_name, "/aws/lambda/${var.function_name}")
+  label_value_case  = var.cloudwatch_logs_log_group_name != null ? "none" : null
 
   tags = module.this.tags
 }
