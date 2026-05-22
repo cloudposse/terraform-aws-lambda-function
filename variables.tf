@@ -174,6 +174,12 @@ variable "s3_object_version" {
   default     = null
 }
 
+variable "code_signing_config_arn" {
+  type        = string
+  description = "ARN of a code-signing configuration to enable code signing for this function."
+  default     = null
+}
+
 variable "source_code_hash" {
   type        = string
   description = <<EOF

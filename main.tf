@@ -40,6 +40,7 @@ resource "aws_lambda_function" "this" {
   s3_key                         = var.s3_key
   s3_object_version              = var.s3_object_version
   source_code_hash               = var.source_code_hash
+  code_signing_config_arn        = var.code_signing_config_arn
   tags                           = module.this.tags
   timeout                        = var.timeout
 
