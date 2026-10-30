@@ -16,6 +16,10 @@ module "cloudwatch_log_group" {
   retention_in_days = var.cloudwatch_logs_retention_in_days
   name              = "/aws/lambda/${var.function_name}"
 
+  # Lambda writes to /aws/lambda/<function_name> with the exact case of the
+  # function name, so don't let the label lower-case the log group name.
+  label_value_case = "none"
+
   tags = module.this.tags
 }
 
